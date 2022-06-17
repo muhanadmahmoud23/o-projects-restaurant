@@ -7,6 +7,7 @@ To Run The Restaurant reservation api system :
 
 1. Download laravel folder
 2. Run these commands :
+   - composer update --no-scripts
    - php artisan migrate:fresh --seed
    - php artisan schedule:work  
    - php artisan serve
