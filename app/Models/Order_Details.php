@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Meals;
+use App\Models\Meal;
 
 class Order_Details extends Model
 {
     use HasFactory;
+
     protected $table = 'order_details';
+    
     protected $fillable = [
         'id' ,
         'order_id',
@@ -20,7 +22,7 @@ class Order_Details extends Model
     ];
 
     public function meals(){
-        return $this->belongsTo(Meals::class, 'meal_id', 'id');
+        return $this->belongsTo(Meal::class, 'meal_id', 'id');
     }
 
 }

@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Order_Details;
-use App\Models\Orders;
+use App\Models\Order;
+use App\Traits\DiscountCalc;
 
 class InvoiceContoller extends Controller
 {
+    use DiscountCalc;
     public function print(Request $request){
         $validator = Validator::make($request->all() ,[
             'paid'      =>  'required|int',
-            'id'  =>  'required|exists:orders',
+            'id'  =>  'required|exists:order',
         ]);
         
         if($validator->fails())
@@ -29,23 +31,13 @@ class InvoiceContoller extends Controller
             $i = 1 ;
             $total = 0;
 
-             //Get Meals Name
+             //Get Meals Name And Total Price
             foreach($order_details as $meal){
-                array_push($items , 'Meal No '. $i++ . " : " . $meal->meals->description . ', Price : ' . $meal->meals->price);
-                //Disount
-                if( $meal->meals->discount == 0 ||  $meal->meals->discount == null)
-                {
-                    $price =  $meal->meals->price;
-                   }
-               else
-               {
-                $price = (  $meal->meals->price* 50 ) / 100;    
-                   }      
-               $total += $price ;
+                array_push($items , 'Meal No '. $i++ . " : " . $meal->meals->description . ', Price : ' . $meal->amount_to_pay);
             }
 
             //Update Paid in Order
-            $order = Orders::find($request->id);
+            $order = Order::find($request->id);
             if($request->paid >= $order->total){
             $order->paid = $request->paid;
             $order->update();
@@ -59,10 +51,9 @@ class InvoiceContoller extends Controller
         }
             return response()->json([
                 'status'  => 200,
-                'customer Name : '  => $order->customername->name,
-                'total'   => $total,
+                'customer Name'  => $order->customername->name,
+                'total'   => $order->total,
                 'Order Details'=>  $items,
-           
             ]);
         }
         

@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Customers;
+use App\Models\Customer;
+use App\Models\Waiter;
 
-class Orders extends Model
+class Order extends Model
 {
     use HasFactory;
-    protected $table = 'orders';
+
+    protected $table = 'order';
+    
     protected $fillable = [
         'id' ,
         'table_id',
@@ -24,7 +27,14 @@ class Orders extends Model
     ];
 
     public function customername(){
-        return $this->belongsTo( Customers::class , 'customer_id' , 'id' );
+        return $this->belongsTo( Customer::class , 'customer_id' , 'id' );
     }
 
+    public function order(){
+        return $this->belongsTo( Customer::class , 'customer_id' , 'id' );
+    }
+
+    public function waiter(){
+        return $this->belongsTo( Waiter::class , 'waiter_id' , 'waiter_id' );
+    }
 }

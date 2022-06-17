@@ -5,18 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Meals extends Model
+class Reservation extends Model
 {
     use HasFactory;
-    protected $table = 'meals';
+
+    protected $table = 'reservation';
+    
     protected $fillable = [
         'id' ,
-        'price',
-        'description',
-        'quantity_avaliable',
-        'discount',
+        'table_id',
+        'customer_id',
+        'from_time',
+        'to_time',
+        'waiting_list',
         'created_at',
         'updated_at'
     ];
-
 }

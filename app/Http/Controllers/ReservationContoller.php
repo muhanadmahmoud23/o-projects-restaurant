@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
-use App\Models\Reservations;
-use App\Models\Tables;
+use App\Models\Reservation;
+use App\Models\Table;
 use App\Traits\Check_Availability;
-use App\Traits\Reservation;
+use App\Traits\Reservation_Waiting_list;
 
 class ReservationContoller extends Controller
 {
     use Check_Availability;
-    use Reservation;
+    use Reservation_Waiting_list;
 
   public function check_availability(Request $request) {
 

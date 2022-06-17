@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Meals;
+use App\Models\Meal;
 
 class MealsContoller extends Controller
 {
     public function allmeals(){
 
-        $meals = Meals::where('quantity_avaliable' , '>' , 0)->get();
+        $meals = Meal::where('quantity_avaliable' , '>' , 0)->get();
 
         if($meals)
         {
